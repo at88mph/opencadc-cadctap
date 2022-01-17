@@ -1,0 +1,63 @@
+# Use the official docker image.
+image: docker:latest
+
+services:
+  - docker:dind
+before_script:
+  - docker login -u "$CI_REGISTRY_USER" -p "$CI_REGISTRY_PASSWORD" $CI_REGISTRY
+
+# # Build Docker images with CI/CD and push to the GitLab registry.
+# # Docker-in-Docker documentation: https://docs.gitlab.com/ee/ci/docker/using_docker_build.html
+# #
+docker-build-3.7:
+  stage: build
+  # Default branch leaves tag empty (= '$version-slim' tag)
+  script:
+    - |
+      python_version="3.7"
+      tag="${python_version}-slim"
+      echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = '${tag}'"
+    - docker build --pull -t "${CI_REGISTRY_IMAGE}:${tag}" --network host -f docker/${python_version}/slim/Dockerfile docker/${python_version}/slim/
+    - docker push "$CI_REGISTRY_IMAGE:${tag}"
+    - docker rmi "$CI_REGISTRY_IMAGE:${tag}"
+
+docker-build-3.8:
+  stage: build
+  # Default branch leaves tag empty (= '$version-slim' tag)
+  script:
+    - |
+      python_version="3.8"
+      tag="${python_version}-slim"
+      echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = '${tag}'"
+    - docker build --pull -t "${CI_REGISTRY_IMAGE}:${tag}" --network host -f docker/${python_version}/slim/Dockerfile docker/${python_version}/slim/
+    - docker push "$CI_REGISTRY_IMAGE:${tag}"
+    - docker rmi "$CI_REGISTRY_IMAGE:${tag}"
+
+docker-build-3.9:
+  stage: build
+  # Default branch leaves tag empty (= '$version-slim' tag)
+  script:
+    - |
+      python_version="3.9"
+      tag="${python_version}-slim"
+      echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = '${tag}'"
+    - docker build --pull -t "${CI_REGISTRY_IMAGE}:${tag}" --network host -f docker/${python_version}/slim/Dockerfile docker/${python_version}/slim/
+    - docker push "$CI_REGISTRY_IMAGE:${tag}"
+    - docker rmi "$CI_REGISTRY_IMAGE:${tag}"
+
+docker-build-3.10:
+  stage: build
+  # Default branch leaves tag empty (= '$version-slim' tag)
+  script:
+    - |
+      python_version="3.10"
+      tag="${python_version}-slim"
+      echo "Running on default branch '$CI_DEFAULT_BRANCH': tag = '${tag}'"
+    - docker build --pull -t "${CI_REGISTRY_IMAGE}:${tag}" --network host -f docker/${python_version}/slim/Dockerfile docker/${python_version}/slim/
+    - docker push "$CI_REGISTRY_IMAGE:${tag}"
+    - docker rmi "$CI_REGISTRY_IMAGE:${tag}"
+  # Run this job in a branch where a Dockerfile exists
+  # rules:
+  #   - if: $CI_COMMIT_BRANCH
+  #     exists:
+  #       - Dockerfile
