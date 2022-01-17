@@ -1,2 +1,1 @@
-# cadctap
-
+# opencadc-cadctap
