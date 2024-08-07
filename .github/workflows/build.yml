@@ -1,27 +1,38 @@
-name: Docker Image builds
+name: OpenCADC CADC TAP Docker CI
 
 on:
-  push:
-    branches: [ "main" ]
   pull_request:
-    branches: [ "main" ]
+  push:
+  release:
 
 jobs:
+  #
+  # Package jobs
+  #
 
-  build-3_10:
+  package-3_10:
     uses: ./.github/workflows/docker.yml
     secrets: inherit
     with:
+      name: cadctap
       version: '3.10'
+      flavour: slim
 
-  build-3_11:
+  package-3_11:
     uses: ./.github/workflows/docker.yml
     secrets: inherit
     with:
+      name: cadctap
       version: '3.11'
+      flavour: slim
 
-  build-3_12:
+  package-3_12:
     uses: ./.github/workflows/docker.yml
     secrets: inherit
     with:
+      name: cadctap
       version: '3.12'
+      flavour: slim
+#
+# End Package Jobs
+#
